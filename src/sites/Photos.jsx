@@ -17,7 +17,7 @@ export function Photos(){
             method: "GET"
         }).then(res => res.json())
         .then(json => setPhotos(json.results));
-    }, []);
+    });
 
     const img = e => <img onClick={() => {
         fetch(`https://api.unsplash.com/photos/${e.id}?client_id=${keys.access}`, {
