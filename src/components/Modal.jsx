@@ -15,7 +15,7 @@ export function Modal({isOpen, setOpen, photoData}){
                         <FontAwesomeIcon icon={faXmark} />
                     </div>
                     <div className="image__container">
-                        <img src={photoData.urls.regular} />
+                        <img src={photoData.urls.regular} alt="modal" />
                     </div>
                     <div className="image-data__container">
                         <div className="data-section"><span>Author:</span><span>{photoData.user.name}</span></div>

@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { json, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { keys } from "../api/keys";
 import { SearchBar } from "../components/SearchBar";
 import { Modal } from "../components/Modal";
@@ -19,7 +19,7 @@ export function Photos(){
         .then(json => setPhotos(json.results));
     });
 
-    const img = e => <img onClick={() => {
+    const img = e => <img alt={e.description} onClick={() => {
         fetch(`https://api.unsplash.com/photos/${e.id}?client_id=${keys.access}`, {
             method: "GET"
         }).then(res => res.json())
