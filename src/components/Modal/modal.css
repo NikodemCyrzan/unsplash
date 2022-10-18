@@ -1,0 +1,71 @@
+/* Zainstaluj sobie jakiegoś cxoś takiego np. https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode do formatowania */
+body:has(.modal__wrapper[active="true"]) {
+    overflow: hidden;
+}
+
+.modal__wrapper {
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 50;
+}
+
+.modal__wrapper[active="false"] {
+    display: none;
+}
+
+.modal__background {
+    cursor: zoom-out;
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background-color: rgba(0, 0, 0, 0.3);
+}
+
+.modal__container {
+    width: 70vw;
+    padding: 30px;
+    background-color: white;
+    box-shadow: 0 0 10px 5px rgba(0, 0, 0, 0.3);
+    z-index: 2;
+    border-radius: 8px;
+}
+
+.image__container {
+    height: 500px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.image__container img {
+    object-fit: cover;
+    height: 100%;
+    max-width: 100%;
+}
+
+.data-section {
+    display: flex;
+    flex-direction: column;
+    margin: 10px 0;
+    gap: 5px;
+}
+
+.data-section span:nth-child(1) {
+    font-weight: bold;
+    font-size: 1.2rem;
+}
+
+.close {
+    font-size: 2rem;
+    cursor: pointer;
+    padding: 5px;
+    color: gray;
+}
