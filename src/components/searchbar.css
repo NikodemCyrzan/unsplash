@@ -1,79 +1,91 @@
 .search-bar__wrapper {
-  cursor: text !important;
-  position: relative;
-  padding: 10px;
-  display: flex;
-  border-radius: 8px;
-  background-color: white;
+	cursor: text !important;
+	position: relative;
+	padding: 10px;
+	display: flex;
+	border-radius: 8px;
+	background-color: white;
 }
+
 .big .search-bar__wrapper {
-  box-shadow: 0 0 10px 5px rgba(0, 0, 0, 0.1);
-  width: 600px;
+	box-shadow: 0 0 10px 5px rgba(0, 0, 0, 0.1);
+	width: 600px;
 }
+
 .small .search-bar__wrapper {
-  width: 700px;
-  background-color: #f0f0f0;
-  border-radius: 50px;
+	width: 700px;
+	background-color: #f0f0f0;
+	border-radius: 50px;
 }
+
 .search-bar__wrapper .icon {
-  width: 30px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin-right: 10px;
-  color: gray;
+	width: 30px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	margin-right: 10px;
+	color: gray;
 }
+
+/* :has jest spoko ale np mozilla go nie obsługuje */
+/* https://caniuse.com/css-has */
 .big .search-bar__wrapper:has(input:focus) {
-  outline: 1px solid rgb(0, 140, 255);
+	outline: 1px solid rgb(0, 140, 255);
 }
+
 .small .search-bar__wrapper:has(input:focus) {
-  outline: 3px solid rgb(0, 0, 0);
+	outline: 3px solid rgb(0, 0, 0);
 }
+
 .search-bar__wrapper input {
-  padding: 0;
-  width: calc(100% - 40px);
-  outline: none;
-  font-size: 1.2rem;
-  border: none;
-  background-color: transparent;
+	padding: 0;
+	width: calc(100% - 40px);
+	outline: none;
+	font-size: 1.2rem;
+	border: none;
+	background-color: transparent;
 }
+
 .hint__wrapper {
-  position: absolute;
-  left: 0;
-  right: 0;
-  top: calc(100% + 6px);
-  overflow: hidden;
-  padding: 10px 0;
-  border-radius: 8px;
-  box-shadow: 0 0 10px 5px rgba(0, 0, 0, 0.1);
-  background-color: white;
+	position: absolute;
+	left: 0;
+	right: 0;
+	top: calc(100% + 6px);
+	overflow: hidden;
+	padding: 10px 0;
+	border-radius: 8px;
+	box-shadow: 0 0 10px 5px rgba(0, 0, 0, 0.1);
+	background-color: white;
 }
+
 .hint {
-  padding: 5px 15px;
-  cursor: pointer;
-  display: block;
-  text-decoration: none;
-  color: inherit;
-  color: black;
-  background-color: white;
+	padding: 5px 15px;
+	cursor: pointer;
+	display: block;
+	text-decoration: none;
+	color: inherit;
+	color: black;
+	background-color: white;
 }
+
 .hint:hover {
-  background-color: #f0f0f0;
+	background-color: #f0f0f0;
 }
+
 .null-hint {
-  padding: 5px 15px;
-  cursor: default;
-  display: block;
-  text-decoration: none;
-  color: inherit;
-  color: gray;
-  background-color: white;
+	padding: 5px 15px;
+	cursor: default;
+	display: block;
+	text-decoration: none;
+	color: inherit;
+	color: gray;
+	background-color: white;
 }
 
 .search-bar__closer {
-  position: fixed;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
+	position: fixed;
+	top: 0;
+	right: 0;
+	bottom: 0;
+	left: 0;
 }
