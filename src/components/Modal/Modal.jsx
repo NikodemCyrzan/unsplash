@@ -1,6 +1,5 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faXmark } from "@fortawesome/free-solid-svg-icons";
-import "./modal.css";
 
 //
 // może najlepiej zrób sobie tego unsplasha w Typescripcie im szybciej sie go nauczysz tym lepiej
@@ -31,40 +30,44 @@ export function Modal({ isOpen, setOpen, photoData }) {
 
     if (photoData != null)
         return (
-            <div className="modal__wrapper" active={isOpen.toString()}>
+            <div
+                className={`modal__wrapper fixed top-0 right-0 bottom-0 left-0 flex items-center justify-center z-[50] ${
+                    isOpen ? "block" : "hidden"
+                }`}>
                 {/*  tego onClicka używamy dwa razy może warto wynieśc go do funkcji? np handleClick */}
                 <div
-                    className="modal__background"
-                    onClick={() => setOpen(false)}
-                ></div>
-                <div className="modal__container">
-                    <div className="close" onClick={() => setOpen(false)}>
+                    className="cursor-zoom-out absolute top-0 right-0 bottom-0 left-0 bg-black/[.3]"
+                    onClick={() => setOpen(false)}></div>
+                <div className="w-[70vw] p-8 bg-white z-[2] rounded-md">
+                    <div
+                        className="text-3xl cursor-pointer p-2.5 text-gray-300"
+                        onClick={() => setOpen(false)}>
                         <FontAwesomeIcon icon={faXmark} />
                     </div>
-                    <div className="image__container">
-                        <img src={photoData.urls.regular} alt="modal" />
+                    <div className="h-[500px] flex items-center justify-center">
+                        <img
+                            className="object-cover h-full max-w-full"
+                            src={photoData.urls.regular}
+                            alt="modal"
+                        />
                     </div>
-                    <div className="image-data__container">
-                        <div className="data-section">
-                            <span>Author:</span>
-                            <span>{photoData.user.name}</span>
-                        </div>
+                    <div className="flex flex-col my-5 gap-2.5">
+                        <span className="font-bold text-lg">Author:</span>
+                        <span>{photoData.user.name}</span>
                     </div>
-                    <div className="image-data__container">
-                        {/* 
+                    {/* 
 							photoData.location.city != null ? `, ${photoData.location.city}` : ""  
 							photoData.location.city ? `, ${photoData.location.city}` : ""
 							a jeszcze lepiej przenieść do do osobnej zmiennej
 						 */}
-                        <div className="data-section">
-                            <span>Location:</span>
-                            <span>
-                                {photoData.location.country}
-                                {photoData.location.city != null
-                                    ? `, ${photoData.location.city}`
-                                    : ""}
-                            </span>
-                        </div>
+                    <div className="flex flex-col mt-5 gap-2.5">
+                        <span className="font-bold text-lg">Location:</span>
+                        <span>
+                            {photoData.location.country}
+                            {photoData.location.city != null
+                                ? `, ${photoData.location.city}`
+                                : ""}
+                        </span>
                     </div>
                 </div>
             </div>
