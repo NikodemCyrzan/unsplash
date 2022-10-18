@@ -31,6 +31,8 @@ export function SearchBar({ size = "small", value = "" }) {
 						<FontAwesomeIcon icon={faMagnifyingGlass} />
 					</div>
 					<input id="searchInput" autoCorrect="off" autoComplete="off" type="text" value={inputValue} placeholder="Search free high-resolution photos"
+					// https://medium.com/nerd-for-tech/debounce-your-search-react-input-optimization-fd270a8042b
+					// warto dodać jakiś debounce tak żeby request szedł dopiero po jakimś czasie od wpisania a nie przy wpisaniu każdej literki
 						onChange={e => {
 							let value = e.target.value; // tutaj powinnen być const
 							setValue(value);
