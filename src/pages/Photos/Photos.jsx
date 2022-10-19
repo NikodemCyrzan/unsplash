@@ -1,9 +1,9 @@
 // najlepiej używać absolute imports https://dev.to/nilanth/no-more-import-in-react-2mbo
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { keys } from "../../api/keys";
 import { SearchBar } from "../../components/SearchBar/SearchBar";
 import { Modal } from "../../components/Modal/Modal";
+import { getImageInformations, getImages } from "../../modules/services";
 
 // Warto używać funkcji strzałkowej
 // const Photos = () =>  i wtedy na końcu export default Photos;
@@ -11,39 +11,30 @@ import { Modal } from "../../components/Modal/Modal";
 
 export function Photos() {
     const { query } = useParams();
-    const [photos, setPhotos] = useState([]);
+    const [images, setImages] = useState([]);
 
     const [isModalOpen, setModalOpen] = useState(false);
     const [modalData, setModalData] = useState(null);
 
     useEffect(() => {
-        fetch(
-            `https://api.unsplash.com/search/photos/?client_id=${keys.access}&query=${query}&per_page=40`,
-            {
-                method: "GET",
-            }
-        )
-            .then((res) => res.json())
-            .then((json) => setPhotos(json.results));
-    }, [query]); // tutaj musimy dać query w dependencies, kiedy nie damy nic w deps'ach to requesty leca jeden za drugim cały czas
+        (async () => {
+            const images = await getImages(query);
 
-    // Coś takiego najlepiej dać do oddzielnego komponentu a fetcha przenieść do osobnej funkcji + nazwy komponentów zaczynamy z dużej litery
+            setImages(images?.results);
+        })();
+    }, [query]);
+
+    // Coś takiego najlepiej dać do oddzielnego komponentu + nazwy komponentów zaczynamy z dużej litery
     const img = (e) => (
         <img
             className="w-full radius-md cursor-zoom-in"
             alt={e.description}
             onClick={() => {
-                fetch(
-                    `https://api.unsplash.com/photos/${e.id}?client_id=${keys.access}`,
-                    {
-                        method: "GET",
-                    }
-                )
-                    .then((res) => res.json())
-                    .then((json) => {
-                        setModalData(json);
-                        setModalOpen(true);
-                    });
+                (async () => {
+                    const info = await getImageInformations(e.id);
+                    setModalData(info);
+                    setModalOpen(true);
+                })();
             }}
             key={e.id}
             title={e.description}
@@ -51,15 +42,12 @@ export function Photos() {
         />
     );
 
-    // proponowałbym już wyżej podzielić zdjęcia na 3 kolumny
-    const firstColumn = photos?.slice(0, 10);
-    const secondColumn = photos?.slice(10, 20);
-    const thirdColumn = photos?.slice(20);
-
-    // jezeli chcesz zrobić to tak jak niżej robiłeś to możesz zrobić tak
-    // const firstColumn = photos?.filter((_, index) => index % 3 === 0);
-    // const secondColumn = photos?.filter((_, index) => index % 3 === 1);
-    // const thirdColumn = photos?.filter((_, index) => index % 3 === 2);
+    const firstColumn = images?.slice(0, images?.length / 3);
+    const secondColumn = images?.slice(
+        images?.length / 3,
+        (images?.length / 3) * 2
+    );
+    const thirdColumn = images?.slice((images?.length / 3) * 2);
 
     return (
         <>

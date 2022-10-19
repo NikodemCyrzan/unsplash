@@ -1,30 +1,15 @@
 import { useEffect, useState } from "react";
-import { keys } from "../../api/keys";
 import { SearchBar } from "../../components/SearchBar/SearchBar";
+import { getRandomImage } from "../../modules/services";
 
-// funckje dałem tutaj ale powinna być w np. src/modules/services.ts
-const getBackgroundImage = async () => {
-    const res = await fetch(
-        `https://api.unsplash.com/photos/random?client_id=${keys.access}`,
-        {
-            method: "GET",
-        }
-    );
-    return res.json();
-};
 export function Main() {
     const [backgroundImage, setBackgroundImage] = useState("");
 
     useEffect(() => {
-        // tutaj przyklad wydzielenia do osobnej funkcji, warto również dodać jakiś try i catch i w przypadku znaczących fetch'ów dodać obsługę błędów
         (async () => {
-            const backgroundImage = await getBackgroundImage();
+            const backgroundImage = await getRandomImage();
             setBackgroundImage(backgroundImage?.urls?.full);
         })();
-        // fetch(`https://api.unsplash.com/photos/random?client_id=${keys.access}`, {
-        //     method: "GET"
-        // }).then(res => res.json())
-        // .then(json => setBackgroundImage(json.urls.full));
     }, []);
 
     return (

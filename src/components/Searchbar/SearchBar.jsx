@@ -2,6 +2,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
 import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
+import { getAutocomplete } from "../../modules/services";
 
 /**
  * @param {{size?: "small" | "big", value?: string}} param
@@ -48,32 +49,15 @@ export function SearchBar({ size = "small", value = "" }) {
                     // https://medium.com/nerd-for-tech/debounce-your-search-react-input-optimization-fd270a8042b
                     // warto dodać jakiś debounce tak żeby request szedł dopiero po jakimś czasie od wpisania a nie przy wpisaniu każdej literki
                     onChange={(e) => {
-                        let value = e.target.value; // tutaj powinnen być const
+                        const value = e.target.value; // tutaj powinnen być const
                         setValue(value);
-                        if (value.length >= 3)
-                            // wszystkie fetche lepiej przenieść do osobnych funkcji
-                            fetch(
-                                `https://unsplash.com/nautocomplete/${value}`,
-                                {
-                                    method: "GET",
-                                }
-                            )
-                                .then((res) => res.json())
-                                .then((json) =>
-                                    setAutocomplete(json.autocomplete)
-                                );
-                        // + np w tym przypadku lepiej zrobić coś takiego
-                        // https://gomakethings.com/the-early-return-pattern-in-javascript/
 
-                        // if (value.length < 3){
-                        // 	return;
-                        // }
+                        if (value.length < 3) return null;
 
-                        // fetch(`https://unsplash.com/nautocomplete/${value}`, {
-                        // 	method: "GET"
-                        // })
-                        // 	.then(res => res.json())
-                        // 	.then(json => setAutocomplete(json.autocomplete));
+                        (async () => {
+                            const res = await getAutocomplete(value);
+                            setAutocomplete(res?.autocomplete);
+                        })();
                     }}
                     onKeyDown={(e) => {
                         if (e.code === "Enter")
@@ -85,8 +69,8 @@ export function SearchBar({ size = "small", value = "" }) {
                         inputValue.length >= 3 && isfocus ? "block" : "hidden"
                     }`}
                     style={{ boxShadow: "0 0 10px 5px rgba(0, 0, 0, 0.1)" }}>
-                    {results.length ? (
-                        results.map((e) => (
+                    {results?.length ? (
+                        results?.map((e) => (
                             <Link
                                 key={e.query}
                                 className="py-1.5 px-4 block hover:bg-gray-100"
