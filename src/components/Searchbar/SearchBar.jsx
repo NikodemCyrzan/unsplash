@@ -15,7 +15,6 @@ export function SearchBar({ size = "small", value = "" }) {
 
     const location = useNavigate();
 
-    // możemy po prostu zrobić tak
     const results = autocomplete?.sort((a, b) => b.priority - a.priority);
     return (
         <>
@@ -49,7 +48,7 @@ export function SearchBar({ size = "small", value = "" }) {
                     // https://medium.com/nerd-for-tech/debounce-your-search-react-input-optimization-fd270a8042b
                     // warto dodać jakiś debounce tak żeby request szedł dopiero po jakimś czasie od wpisania a nie przy wpisaniu każdej literki
                     onChange={(e) => {
-                        const value = e.target.value; // tutaj powinnen być const
+                        const value = e.target.value;
                         setValue(value);
 
                         if (value.length < 3) return null;
@@ -69,28 +68,19 @@ export function SearchBar({ size = "small", value = "" }) {
                         inputValue.length >= 3 && isfocus ? "block" : "hidden"
                     }`}
                     style={{ boxShadow: "0 0 10px 5px rgba(0, 0, 0, 0.1)" }}>
-                    {results?.length ? (
-                        results?.map((e) => (
-                            <Link
-                                key={e.query}
-                                className="py-1.5 px-4 block hover:bg-gray-100"
-                                to={`/photos/${e.query}`}>
-                                {e.query}
-                            </Link>
-                        ))
-                    ) : (
+                    {!results?.length ? (
                         <div className="py-1.5 px-4 block text-gray-400">
                             Nie znaleziono
                         </div>
-                    )}
-                    {/*  a jeszcze lepiej
-							{!results?.length ? 
-								<div className="null-hint">Nie znaleziono</div> 
-							: null}
-							{results.map(e => (
-								<Link key={e.query} className="hint" to={`/photos/${e.query}`}>{e.query}</Link>
-							))} 
-						*/}
+                    ) : null}
+                    {results.map((e) => (
+                        <Link
+                            key={e.query}
+                            className="py-1.5 px-4 block hover:bg-gray-100"
+                            to={`/photos/${e.query}`}>
+                            {e.query}
+                        </Link>
+                    ))}
                 </div>
             </div>
         </>

@@ -29,7 +29,7 @@ const getImages = async (query) => {
         );
         return res.json();
     } catch (error) {
-        console.Error(error);
+        console.error(error);
         return null;
     }
 };
@@ -47,7 +47,7 @@ const getAutocomplete = async (value) => {
         });
         return res.json();
     } catch (error) {
-        console.Error(error);
+        console.error(error);
         return null;
     }
 };
@@ -68,7 +68,7 @@ const getImageInformations = async (id) => {
         );
         return res.json();
     } catch (error) {
-        console.Error(error);
+        console.error(error);
         return null;
     }
 };

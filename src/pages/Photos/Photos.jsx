@@ -4,6 +4,23 @@ import { useParams } from "react-router-dom";
 import { SearchBar } from "../../components/SearchBar/SearchBar";
 import { Modal } from "../../components/Modal/Modal";
 import { getImageInformations, getImages } from "../../modules/services";
+import Image from "../../components/Image/Image";
+
+const Column = ({ images, onImageClick }) => {
+    return (
+        <div className="flex flex-col gap-4">
+            {images?.map((image) => {
+                return (
+                    <Image
+                        key={image?.id}
+                        imageData={image}
+                        onClick={onImageClick}
+                    />
+                );
+            })}
+        </div>
+    );
+};
 
 // Warto używać funkcji strzałkowej
 // const Photos = () =>  i wtedy na końcu export default Photos;
@@ -24,23 +41,13 @@ export function Photos() {
         })();
     }, [query]);
 
-    // Coś takiego najlepiej dać do oddzielnego komponentu + nazwy komponentów zaczynamy z dużej litery
-    const img = (e) => (
-        <img
-            className="w-full radius-md cursor-zoom-in"
-            alt={e.description}
-            onClick={() => {
-                (async () => {
-                    const info = await getImageInformations(e.id);
-                    setModalData(info);
-                    setModalOpen(true);
-                })();
-            }}
-            key={e.id}
-            title={e.description}
-            src={e.urls.regular}
-        />
-    );
+    function handleImageClick(id) {
+        (async () => {
+            const info = await getImageInformations(id);
+            setModalData(info);
+            setModalOpen(true);
+        })();
+    }
 
     const firstColumn = images?.slice(0, images?.length / 3);
     const secondColumn = images?.slice(
@@ -56,27 +63,25 @@ export function Photos() {
                 setOpen={setModalOpen}
                 photoData={modalData}
             />
-            {/* tutaj masz normalnie photos a w innych photots */}
             <div className="px-5 py-2.5">
                 <SearchBar value={query} />
             </div>
             <div className="mx-auto my-10 max-w-screen-2xl px-10 flex gap-4">
-                {/* Tutaj też możemy zrobić osobne małe komponent które przyjmują tylko i wyłącznie arrayke */}
-                <div className="flex flex-col gap-4">
-                    {firstColumn.map((e, i) => {
-                        return img(e);
-                    })}
-                </div>
-                <div className="flex flex-col gap-4">
-                    {secondColumn.map((e, i) => {
-                        return img(e);
-                    })}
-                </div>
-                <div className="flex flex-col gap-4">
-                    {thirdColumn.map((e, i) => {
-                        return img(e);
-                    })}
-                </div>
+                <Column
+                    key="1"
+                    images={firstColumn}
+                    onImageClick={handleImageClick}
+                />
+                <Column
+                    key="2"
+                    images={secondColumn}
+                    onImageClick={handleImageClick}
+                />
+                <Column
+                    key="3"
+                    images={thirdColumn}
+                    onImageClick={handleImageClick}
+                />
             </div>
         </>
     );
