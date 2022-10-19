@@ -1,10 +1,9 @@
-// najlepiej używać absolute imports https://dev.to/nilanth/no-more-import-in-react-2mbo
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import SearchBar from "../../components/SearchBar/SearchBar";
-import Modal from "../../components/Modal/Modal";
-import { getImageInformations, getImages } from "../../modules/services";
-import Image from "../../components/Image/Image";
+import SearchBar from "components/SearchBar/SearchBar";
+import Modal from "components/Modal/Modal";
+import { getImageInformations, getImages } from "modules/services";
+import Image from "components/Image/Image";
 
 const Column = ({ images, onImageClick }) => {
     return (

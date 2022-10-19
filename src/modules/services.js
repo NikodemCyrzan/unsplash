@@ -1,9 +1,7 @@
-import { keys } from "../api/keys";
-
 const getRandomImage = async () => {
     try {
         const res = await fetch(
-            `https://api.unsplash.com/photos/random?client_id=${keys.access}`,
+            `https://api.unsplash.com/photos/random?client_id=${process.env.REACT_APP_UNSPLASH_API_ACCESS_KEY}`,
             {
                 method: "GET",
             }
@@ -22,7 +20,7 @@ const getImages = async (query) => {
         if (typeof query !== "string")
             throw new Error("'query' should be type of string");
         const res = await fetch(
-            `https://api.unsplash.com/search/photos/?client_id=${keys.access}&query=${query}&per_page=40`,
+            `https://api.unsplash.com/search/photos/?client_id=${process.env.REACT_APP_UNSPLASH_API_ACCESS_KEY}&query=${query}&per_page=40`,
             {
                 method: "GET",
             }
@@ -61,7 +59,7 @@ const getImageInformations = async (id) => {
             throw new Error("'id' should be type of string");
 
         const res = await fetch(
-            `https://api.unsplash.com/photos/${id}?client_id=${keys.access}`,
+            `https://api.unsplash.com/photos/${id}?client_id=${process.env.REACT_APP_UNSPLASH_API_ACCESS_KEY}`,
             {
                 method: "GET",
             }

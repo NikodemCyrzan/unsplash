@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
-import SearchBar from "../../components/SearchBar/SearchBar";
-import { getRandomImage } from "../../modules/services";
+import SearchBar from "components/SearchBar/SearchBar";
+import { getRandomImage } from "modules/services";
 
 const Main = () => {
     const [backgroundImage, setBackgroundImage] = useState("");

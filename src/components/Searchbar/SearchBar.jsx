@@ -2,7 +2,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
 import { Link, useNavigate } from "react-router-dom";
 import { useRef, useState } from "react";
-import { getAutocomplete } from "../../modules/services";
+import { getAutocomplete } from "modules/services";
 
 /**
  * @param {{size?: "small" | "big", value?: string}} param
@@ -10,8 +10,7 @@ import { getAutocomplete } from "../../modules/services";
 const SearchBar = ({ size = "small", value = "" }) => {
     const [inputValue, setValue] = useState(value);
     const [autocomplete, setAutocomplete] = useState([]);
-    const [isfocus, setFocus] = useState(false); // powinno być isFocus a jeszcze lepiej isFocused, setIsFocused
-    // https://itnext.io/maintain-a-clean-code-based-in-react-part-2-c609ae9b559e
+    const [isFocused, setFocused] = useState(false);
 
     const searchInputRef = useRef();
 
@@ -21,9 +20,11 @@ const SearchBar = ({ size = "small", value = "" }) => {
     return (
         <>
             <div
-                className="fixed top-0 right-0 bottom-0 left-0"
-                style={{ display: isfocus ? "block" : "none" }}
-                onClick={() => setFocus(false)}
+                className={`fixed top-0 right-0 bottom-0 left-0 ${
+                    isFocused ? "block" : "hidden"
+                }`}
+                style={{ display: !isFocused && "none" }}
+                onClick={() => setFocused(false)}
             />
             <div
                 className={`cursor-text relative p-2 flex max-w-2xl mx-auto radius-md bg-white text-black gap-3 ${
@@ -34,7 +35,7 @@ const SearchBar = ({ size = "small", value = "" }) => {
                 onClick={() => {
                     searchInputRef.current.focus();
                 }}
-                onFocus={() => setFocus(true)}>
+                onFocus={() => setFocused(true)}>
                 <div className="w-8 flex items-center text-gray-500 justify-center">
                     <FontAwesomeIcon icon={faMagnifyingGlass} />
                 </div>
@@ -66,7 +67,7 @@ const SearchBar = ({ size = "small", value = "" }) => {
                 />
                 <div
                     className={`absolute right-0 left-0 top-full rounded-md overflow-hidden py-2 bg-white ${
-                        inputValue.length >= 3 && isfocus ? "block" : "hidden"
+                        inputValue.length >= 3 && isFocused ? "block" : "hidden"
                     }`}
                     style={{ boxShadow: "0 0 10px 5px rgba(0, 0, 0, 0.1)" }}>
                     {!results?.length ? (
