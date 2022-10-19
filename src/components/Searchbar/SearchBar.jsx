@@ -1,8 +1,9 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
 import { Link, useNavigate } from "react-router-dom";
-import { useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { getAutocomplete } from "modules/services";
+import debounce from "lodash.debounce";
 
 /**
  * @param {{size?: "small" | "big", value?: string}} param
@@ -15,6 +16,31 @@ const SearchBar = ({ size = "small", value = "" }) => {
     const searchInputRef = useRef();
 
     const location = useNavigate();
+
+    const handleInputChange = (e) => {
+        const value = e.target.value;
+        setValue(value);
+
+        if (value.length < 3) return null;
+
+        (async () => {
+            const res = await getAutocomplete(value);
+            setAutocomplete(res?.autocomplete);
+        })();
+    };
+    const debouncedResults = useMemo(() => {
+        return debounce(handleInputChange, 300);
+    }, []);
+
+    useEffect(() => {
+        searchInputRef.current.value = value;
+    }, [value]);
+
+    useEffect(() => {
+        return () => {
+            debouncedResults.cancel();
+        };
+    });
 
     const results = autocomplete?.sort((a, b) => b.priority - a.priority);
     return (
@@ -45,21 +71,10 @@ const SearchBar = ({ size = "small", value = "" }) => {
                     autoCorrect="off"
                     autoComplete="off"
                     type="text"
-                    value={inputValue}
                     placeholder="Search free high-resolution photos"
                     // https://medium.com/nerd-for-tech/debounce-your-search-react-input-optimization-fd270a8042b
                     // warto dodać jakiś debounce tak żeby request szedł dopiero po jakimś czasie od wpisania a nie przy wpisaniu każdej literki
-                    onChange={(e) => {
-                        const value = e.target.value;
-                        setValue(value);
-
-                        if (value.length < 3) return null;
-
-                        (async () => {
-                            const res = await getAutocomplete(value);
-                            setAutocomplete(res?.autocomplete);
-                        })();
-                    }}
+                    onChange={debouncedResults}
                     onKeyDown={(e) => {
                         if (e.code === "Enter")
                             location(`/photos/${inputValue}`);
