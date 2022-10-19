@@ -1,7 +1,7 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
 import { Link, useNavigate } from "react-router-dom";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { getAutocomplete } from "../../modules/services";
 
 /**
@@ -12,6 +12,8 @@ const SearchBar = ({ size = "small", value = "" }) => {
     const [autocomplete, setAutocomplete] = useState([]);
     const [isfocus, setFocus] = useState(false); // powinno być isFocus a jeszcze lepiej isFocused, setIsFocused
     // https://itnext.io/maintain-a-clean-code-based-in-react-part-2-c609ae9b559e
+
+    const searchInputRef = useRef();
 
     const location = useNavigate();
 
@@ -30,8 +32,7 @@ const SearchBar = ({ size = "small", value = "" }) => {
                         : "w-full rounded-full bg-gray-200"
                 }`}
                 onClick={() => {
-                    // tutaj możesz poćwiczyć i zrobić to z użyciem ref https://dmitripavlutin.com/react-useref-guide/
-                    document.getElementById("searchInput").focus();
+                    searchInputRef.current.focus();
                 }}
                 onFocus={() => setFocus(true)}>
                 <div className="w-8 flex items-center text-gray-500 justify-center">
@@ -39,7 +40,7 @@ const SearchBar = ({ size = "small", value = "" }) => {
                 </div>
                 <input
                     className="p-0 w-full focus:outline-none text-lg bg-transparent"
-                    id="searchInput"
+                    ref={searchInputRef}
                     autoCorrect="off"
                     autoComplete="off"
                     type="text"
