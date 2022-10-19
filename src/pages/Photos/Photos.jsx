@@ -1,8 +1,8 @@
 // najlepiej używać absolute imports https://dev.to/nilanth/no-more-import-in-react-2mbo
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { SearchBar } from "../../components/SearchBar/SearchBar";
-import { Modal } from "../../components/Modal/Modal";
+import SearchBar from "../../components/SearchBar/SearchBar";
+import Modal from "../../components/Modal/Modal";
 import { getImageInformations, getImages } from "../../modules/services";
 import Image from "../../components/Image/Image";
 
@@ -22,11 +22,7 @@ const Column = ({ images, onImageClick }) => {
     );
 };
 
-// Warto używać funkcji strzałkowej
-// const Photos = () =>  i wtedy na końcu export default Photos;
-// https://www.robinwieruch.de/react-function-component/
-
-export function Photos() {
+const Photos = () => {
     const { query } = useParams();
     const [images, setImages] = useState([]);
 
@@ -85,4 +81,6 @@ export function Photos() {
             </div>
         </>
     );
-}
+};
+
+export default Photos;

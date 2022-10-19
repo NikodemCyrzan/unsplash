@@ -7,7 +7,7 @@ import { getAutocomplete } from "../../modules/services";
 /**
  * @param {{size?: "small" | "big", value?: string}} param
  */
-export function SearchBar({ size = "small", value = "" }) {
+const SearchBar = ({ size = "small", value = "" }) => {
     const [inputValue, setValue] = useState(value);
     const [autocomplete, setAutocomplete] = useState([]);
     const [isfocus, setFocus] = useState(false); // powinno być isFocus a jeszcze lepiej isFocused, setIsFocused
@@ -85,4 +85,6 @@ export function SearchBar({ size = "small", value = "" }) {
             </div>
         </>
     );
-}
+};
+
+export default SearchBar;

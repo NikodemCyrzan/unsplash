@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
-import { SearchBar } from "../../components/SearchBar/SearchBar";
+import SearchBar from "../../components/SearchBar/SearchBar";
 import { getRandomImage } from "../../modules/services";
 
-export function Main() {
+const Main = () => {
     const [backgroundImage, setBackgroundImage] = useState("");
 
     useEffect(() => {
@@ -35,4 +35,6 @@ export function Main() {
             </div>
         </>
     );
-}
+};
+
+export default Main;

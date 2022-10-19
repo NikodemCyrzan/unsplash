@@ -9,7 +9,7 @@ import { faXmark } from "@fortawesome/free-solid-svg-icons";
 /**
  * @param {{isOpen: boolean, setOpen: (value: boolean) => void, photoData: object}}
  */
-export function Modal({ isOpen, setOpen, photoData }) {
+const Modal = ({ isOpen, setOpen, photoData }) => {
     if (!photoData) return null;
 
     const { user, urls, location } = photoData;
@@ -55,4 +55,6 @@ export function Modal({ isOpen, setOpen, photoData }) {
             </div>
         </div>
     );
-}
+};
+
+export default Modal;
