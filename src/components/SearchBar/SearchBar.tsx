@@ -5,19 +5,21 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import { getAutocomplete } from "modules/services";
 import debounce from "lodash.debounce";
 
-/**
- * @param {{size?: "small" | "big", value?: string}} param
- */
-const SearchBar = ({ size = "small", value = "" }) => {
-    const [inputValue, setValue] = useState(value);
-    const [autocomplete, setAutocomplete] = useState([]);
-    const [isFocused, setFocused] = useState(false);
+type SearchBarProps = {
+    size?: "small" | "big";
+    value?: string;
+};
 
-    const searchInputRef = useRef();
+const SearchBar = ({ size = "small", value = "" }: SearchBarProps) => {
+    const [inputValue, setValue] = useState<string>(value);
+    const [autocomplete, setAutocomplete] = useState<any>([]);
+    const [isFocused, setFocused] = useState<boolean>(false);
+
+    const searchInputRef = useRef<any>();
 
     const location = useNavigate();
 
-    const handleInputChange = (e) => {
+    const handleInputChange = (e: any) => {
         const value = e.target.value;
         setValue(value);
 
@@ -42,14 +44,15 @@ const SearchBar = ({ size = "small", value = "" }) => {
         };
     });
 
-    const results = autocomplete?.sort((a, b) => b.priority - a.priority);
+    const results = autocomplete?.sort(
+        (a: any, b: any) => b.priority - a.priority
+    );
     return (
         <>
             <div
                 className={`fixed top-0 right-0 bottom-0 left-0 ${
                     isFocused ? "block" : "hidden"
                 }`}
-                style={{ display: !isFocused && "none" }}
                 onClick={() => setFocused(false)}
             />
             <div
@@ -72,8 +75,6 @@ const SearchBar = ({ size = "small", value = "" }) => {
                     autoComplete="off"
                     type="text"
                     placeholder="Search free high-resolution photos"
-                    // https://medium.com/nerd-for-tech/debounce-your-search-react-input-optimization-fd270a8042b
-                    // warto dodać jakiś debounce tak żeby request szedł dopiero po jakimś czasie od wpisania a nie przy wpisaniu każdej literki
                     onChange={debouncedResults}
                     onKeyDown={(e) => {
                         if (e.code === "Enter")
@@ -90,7 +91,7 @@ const SearchBar = ({ size = "small", value = "" }) => {
                             Nie znaleziono
                         </div>
                     ) : null}
-                    {results.map((e) => (
+                    {results.map((e: any) => (
                         <Link
                             key={e.query}
                             className="py-1.5 px-4 block hover:bg-gray-100"

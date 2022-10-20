@@ -3,12 +3,14 @@ import SearchBar from "components/SearchBar/SearchBar";
 import { getRandomImage } from "modules/services";
 
 const Main = () => {
-    const [backgroundImage, setBackgroundImage] = useState("");
+    const [backgroundImage, setBackgroundImage] = useState<string | undefined>(
+        ""
+    );
 
     useEffect(() => {
         (async () => {
-            const backgroundImage = await getRandomImage();
-            setBackgroundImage(backgroundImage?.urls?.full);
+            const randomImage = await getRandomImage();
+            setBackgroundImage(randomImage?.urls?.full);
         })();
     }, []);
 

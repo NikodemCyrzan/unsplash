@@ -5,7 +5,12 @@ import Modal from "components/Modal/Modal";
 import { getImageInformations, getImages } from "modules/services";
 import Image from "components/Image/Image";
 
-const Column = ({ images, onImageClick }) => {
+type ColumProps = {
+    images: any[] | undefined;
+    onImageClick: (id: string) => void | undefined;
+};
+
+const Column = ({ images, onImageClick }: ColumProps) => {
     return (
         <div className="flex flex-col gap-4">
             {images?.map((image) => {
@@ -23,20 +28,20 @@ const Column = ({ images, onImageClick }) => {
 
 const Photos = () => {
     const { query } = useParams();
-    const [images, setImages] = useState([]);
+    const [images, setImages] = useState<any[] | undefined>([]);
 
-    const [isModalOpen, setModalOpen] = useState(false);
-    const [modalData, setModalData] = useState(null);
+    const [isModalOpen, setModalOpen] = useState<boolean>(false);
+    const [modalData, setModalData] = useState<any>(null);
 
     useEffect(() => {
         (async () => {
-            const images = await getImages(query);
+            const images = await getImages(query || "");
 
             setImages(images?.results);
         })();
     }, [query]);
 
-    function handleImageClick(id) {
+    function handleImageClick(id: string) {
         (async () => {
             const info = await getImageInformations(id);
             setModalData(info);

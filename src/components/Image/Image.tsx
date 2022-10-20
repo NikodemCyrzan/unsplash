@@ -1,4 +1,11 @@
-const Image = ({ imageData, onClick }) => {
+import React from "react";
+
+type ImageProps = {
+    imageData: { description: string; id: string; urls: { regular: string } };
+    onClick: (id: string) => void;
+};
+
+const Image = ({ imageData, onClick }: ImageProps) => {
     const { description, id, urls } = imageData;
 
     return (

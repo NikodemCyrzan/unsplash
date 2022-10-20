@@ -1,15 +1,13 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faXmark } from "@fortawesome/free-solid-svg-icons";
 
-//
-// może najlepiej zrób sobie tego unsplasha w Typescripcie im szybciej sie go nauczysz tym lepiej
-// https://www.youtube.com/watch?v=FJDVKeh7RJI
-// https://react-typescript-cheatsheet.netlify.app/docs/basic/setup
-// https://react-typescript-cheatsheet.netlify.app/docs/basic/getting-started/basic_type_example
-/**
- * @param {{isOpen: boolean, setOpen: (value: boolean) => void, photoData: object}}
- */
-const Modal = ({ isOpen, setOpen, photoData }) => {
+type ModalProps = {
+    isOpen: boolean;
+    setOpen: (value: boolean) => void;
+    photoData: { user: any; urls: any; location: any };
+};
+
+const Modal = ({ isOpen, setOpen, photoData }: ModalProps) => {
     if (!photoData) return null;
 
     const { user, urls, location } = photoData;
