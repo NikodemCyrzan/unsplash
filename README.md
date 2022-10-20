@@ -15,6 +15,7 @@ https://unsplash.com/documentation
 * Tailwind CSS
 * Unsplash API
 * Debounce for search bar
+* Typescript
 
 ## Project installation
 ```console
