@@ -21,6 +21,11 @@ https://unsplash.com/documentation
 ```console
 npm i
 ```
+Create .env file in the root directory and add following variables
+```properties
+# .env file
+REACT_APP_UNSPLASH_API_ACCESS_KEY=Your Unsplash API access key
+```
 
 ## Project commands
 Run project in development mode
