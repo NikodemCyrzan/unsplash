@@ -2,7 +2,7 @@ import React from "react";
 
 type ImageProps = {
     imageData: { description: string; id: string; urls: { regular: string } };
-    onClick: (id: string) => void;
+    onClick?: (id: string) => void;
 };
 
 const Image = ({ imageData, onClick }: ImageProps) => {
@@ -12,7 +12,8 @@ const Image = ({ imageData, onClick }: ImageProps) => {
         <img
             className="w-full radius-md cursor-zoom-in"
             alt={description}
-            onClick={() => onClick(id)}
+            // i wtedy zrobić coś takiego
+            onClick={() => onClick?.(id)}
             title={description}
             src={urls.regular}
         />

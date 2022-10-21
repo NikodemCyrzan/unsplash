@@ -4,6 +4,7 @@ import { faXmark } from "@fortawesome/free-solid-svg-icons";
 type ModalProps = {
     isOpen: boolean;
     setOpen: (value: boolean) => void;
+    // any any any - do poprawy
     photoData: { user: any; urls: any; location: any };
 };
 
@@ -38,6 +39,7 @@ const Modal = ({ isOpen, setOpen, photoData }: ModalProps) => {
                         alt="modal"
                     />
                 </div>
+                {/* Dwa razy to samo można się pokusić o malutki component  */}
                 <div className="flex flex-col my-5 gap-2.5">
                     <span className="font-bold text-lg">Author:</span>
                     <span>{user.name}</span>
