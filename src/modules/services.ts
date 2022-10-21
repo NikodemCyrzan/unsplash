@@ -1,3 +1,4 @@
+// można dodać do globalnych typów
 type RadomImageType = {
     id: string;
     created_at: string;
@@ -70,10 +71,11 @@ type RadomImageType = {
     };
 };
 
+const UNSPLASH_API_KEY = process.env.REACT_APP_UNSPLASH_API_ACCESS_KEY;
 const getRandomImage = async (): Promise<RadomImageType | null> => {
     try {
         const res = await fetch(
-            `https://api.unsplash.com/photos/random?client_id=${process.env.REACT_APP_UNSPLASH_API_ACCESS_KEY}`,
+            `https://api.unsplash.com/photos/random?client_id=${UNSPLASH_API_KEY }`,
             {
                 method: "GET",
             }
@@ -83,7 +85,7 @@ const getRandomImage = async (): Promise<RadomImageType | null> => {
         return null;
     }
 };
-
+// można dodać do globalnych typów
 type ImagesType = {
     total: number;
     total_pages: number;
@@ -138,7 +140,7 @@ const getImages = async (query: string): Promise<ImagesType | null> => {
         if (typeof query !== "string")
             throw new Error("'query' should be type of string");
         const res = await fetch(
-            `https://api.unsplash.com/search/photos/?client_id=${process.env.REACT_APP_UNSPLASH_API_ACCESS_KEY}&query=${query}&per_page=40`,
+            `https://api.unsplash.com/search/photos/?client_id=${UNSPLASH_API_KEY }&query=${query}&per_page=40`,
             {
                 method: "GET",
             }
@@ -160,19 +162,21 @@ const getAutocomplete = async (
     value: string
 ): Promise<AutocompleteType | null> => {
     try {
-        if (typeof value !== "string")
-            throw new Error("'value' should be type of string");
+        // na to mamy typescripta żebyśmy nie musieli dawać takich if'ów
+        // if (typeof value !== "string")
+        //     throw new Error("'value' should be type of string");
 
         const res = await fetch(`https://unsplash.com/nautocomplete/${value}`, {
             method: "GET",
         });
+
         return res.json();
     } catch (error) {
         console.error(error);
         return null;
     }
 };
-
+// można dodać do globalnych typów
 type ImageInformationsType = {
     id: string;
     created_at: string;
@@ -235,11 +239,12 @@ const getImageInformations = async (
     id: string
 ): Promise<ImageInformationsType | null> => {
     try {
-        if (typeof id !== "string")
-            throw new Error("'id' should be type of string");
+        // // na to mamy typescripta żebyśmy nie musieli dawać takich if'ów 
+        // if (typeof id !== "string")
+        //     throw new Error("'id' should be type of string");
 
         const res = await fetch(
-            `https://api.unsplash.com/photos/${id}?client_id=${process.env.REACT_APP_UNSPLASH_API_ACCESS_KEY}`,
+            `https://api.unsplash.com/photos/${id}?client_id=${UNSPLASH_API_KEY}`,
             {
                 method: "GET",
             }
@@ -250,5 +255,5 @@ const getImageInformations = async (
         return null;
     }
 };
-
+// można też pisać funkcje tak: export const getImageInformations
 export { getRandomImage, getImages, getAutocomplete, getImageInformations };

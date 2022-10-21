@@ -5,39 +5,44 @@ import Modal from "components/Modal/Modal";
 import { getImageInformations, getImages } from "modules/services";
 import Image from "components/Image/Image";
 
+// Column można przenieść do /components
 type ColumProps = {
-    images: any[] | undefined;
-    onImageClick: (id: string) => void | undefined;
+    // zamiast undefined można dać znak zapytania przed dwukropkiem, + tutaj też proszę stworzyć interface pod images
+    // jeżeli mamy typy / interfacy ogólne/globalne to można stworzyć folder /src/Ts/types.ts tam je umieścić i z nich importować
+    images?: any[];
+    onImageClick?: (id: string) => void;
 };
 
 const Column = ({ images, onImageClick }: ColumProps) => {
     return (
         <div className="flex flex-col gap-4">
-            {images?.map((image) => {
-                return (
+            {/* Można skrócić zapis */}
+            {images?.map((image) => (
                     <Image
                         key={image?.id}
                         imageData={image}
                         onClick={onImageClick}
                     />
-                );
-            })}
+                )
+            )}
         </div>
     );
 };
 
 const Photos = () => {
     const { query } = useParams();
-    const [images, setImages] = useState<any[] | undefined>([]);
+    // spróbuj na podstawie informacji które przychodzą z unsplasha stworzyć interface ( nie jest wskazane używanie any)
+    const [images, setImages] = useState<any[]>([]);
 
-    const [isModalOpen, setModalOpen] = useState<boolean>(false);
+    // jeżeli dajemy default value które jest takiego samego typu jaki useState to nie musimy go pisać
+    const [isModalOpen, setModalOpen] = useState(false);
     const [modalData, setModalData] = useState<any>(null);
 
     useEffect(() => {
         (async () => {
             const images = await getImages(query || "");
 
-            setImages(images?.results);
+            setImages(images?.results ?? []);
         })();
     }, [query]);
 
